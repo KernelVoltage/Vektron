@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary Enterprise SEO Meta Tags -->
+  <title>Vektron Arcade | Pro WebGL & HTML5 Gaming Portal - Play Free Online Games</title>
+  <meta name="title" content="Vektron Arcade | Pro WebGL & HTML5 Gaming Portal - Play Free Online Games">
+  <meta name="description" content="Discover and play the best free online WebGL games, adrenaline-pumping action titles, hyper-speed racing, and mind-bending puzzles instantly on Vektron Arcade. Zero downloads required.">
+  <meta name="keywords" content="WebGL games, HTML5 games, free online games, arcade portal, browser games, play games online, action games, racing games, Vektron Games">
+  <meta name="author" content="Vektron Arcade Studio">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="3 days">
+  <meta name="theme-color" content="#05070f">
+  
+  <!-- Canonical URL (Prevent Duplicate Content) -->
+  <link rel="canonical" href="https://vektronarcade.local/">
+
+  <!-- Open Graph / Facebook SEO -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://vektronarcade.local/">
+  <meta property="og:title" content="Vektron Arcade | Pro WebGL & HTML5 Gaming Portal">
+  <meta property="og:description" content="Play the best free online WebGL games, action games, racing, and puzzles instantly on Vektron Arcade with ultra-fast loading.">
+  <meta property="og:image" content="https://vektronarcade.local/assets/og-banner.jpg">
+  <meta property="og:site_name" content="Vektron Arcade">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card SEO -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://vektronarcade.local/">
+  <meta name="twitter:title" content="Vektron Arcade | Pro WebGL & HTML5 Gaming Portal">
+  <meta name="twitter:description" content="Play the best free online WebGL games, action games, racing, and puzzles instantly on Vektron Arcade.">
+  <meta name="twitter:image" content="https://vektronarcade.local/assets/og-banner.jpg">
+
+  <!-- Schema.org Structured Data (JSON-LD for Google Rich Results) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Vektron Arcade",
+    "url": "https://vektronarcade.local/",
+    "description": "Play high-performance free online WebGL and HTML5 arcade games instantly in your browser.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://vektronarcade.local/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- Resource Hints for Super Fast Loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Topbar Header (Fixed / Floating on Scroll) -->
+  <header class="topbar" role="banner">
+    <div class="logo">VEKTRON<span class="gradient-text">GAMES</span></div>
+    
+    <div class="search-wrapper">
+      <svg class="search-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="searchInput" placeholder="Search games or categories..." aria-label="Search games">
+      <button id="clearSearchBtn" class="clear-search-btn hidden" title="Clear Search">&times;</button>
+    </div>
+  </header>
+
+  <!-- Main App Layout -->
+  <div class="app-layout">
+    
+    <!-- Category Sidebar -->
+    <aside class="left-sidebar" id="categorySidebar" aria-label="Game Categories"></aside>
+
+    <!-- Content Workspace -->
+    <main class="main-content" role="main">
+      
+      <!-- Player Section -->
+      <section id="playerContainer" class="player-section hidden" aria-label="Game Player">
+        <div class="player-card">
+          <div id="gameLoader" class="loader-overlay">
+            <div class="loader-backdrop" id="loaderBackdrop"></div>
+            <div class="loader-content">
+              <div class="thumb-glow-wrapper">
+                <img id="loaderThumb" src="" alt="Game Thumbnail" class="loader-thumb" loading="lazy">
+              </div>
+              <h2 id="loaderTitle" class="gradient-text">Loading Game...</h2>
+              <div class="progress-track" aria-hidden="true">
+                <div id="progressBar" class="progress-fill"></div>
+              </div>
+            </div>
+          </div>
+          <div class="iframe-holder">
+            <iframe id="gameFrame" src="" title="Game Frame Window" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <div class="game-action-bar">
+          <h3 id="activeGameTitle">Game Title</h3>
+          <div class="action-buttons">
+            <button id="fullscreenBtn" class="action-btn" aria-label="Toggle Fullscreen">Fullscreen</button>
+            <button id="closeGameBtn" class="action-btn exit-btn" aria-label="Close Current Game">Close Game</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Games Grid Section -->
+      <section class="grid-section" aria-label="Game Catalog">
+        <div class="section-header">
+          <h2 id="gridTitle">All Arcade Games</h2>
+          <div class="glow-line" aria-hidden="true"></div>
+        </div>
+        <div id="gameGrid" class="game-grid"></div>
+      </section>
+
+    </main>
+
+    <!-- Up Next Sidebar -->
+    <aside class="right-sidebar" aria-label="Recommendations">
+      <h3 class="panel-title">Up Next</h3>
+      <div id="recommendationsList" class="recommendations-list"></div>
+    </aside>
+
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

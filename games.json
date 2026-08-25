@@ -1,0 +1,23 @@
+[
+  {
+    "id": "vectaria-io",
+    "title": "Vectaria.io",
+    "embedUrl": "https://vectaria.io",
+    "thumbnail": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&q=80",
+    "category": "Action"
+  },
+  {
+    "id": "polytrack",
+    "title": "PolyTrack",
+    "embedUrl": "https://html1-classic.itch.zone/html/17754954/index.html",
+    "thumbnail": "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500&q=80",
+    "category": "Racing"
+  },
+  {
+    "id": "moss-moss",
+    "title": "Moss Moss",
+    "embedUrl": "https://html1-classic.itch.zone/html/18234416/moss%20moss%20html/index.html?v=1783372815",
+    "thumbnail": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&q=80",
+    "category": "Puzzle"
+  }
+]

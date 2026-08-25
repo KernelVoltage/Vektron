@@ -1,0 +1,444 @@
+:root {
+  --bg-dark: #05070f;
+  --bg-card: #0e1222;
+  --accent-purple: #8b5cf6;
+  --accent-pink: #ec4899;
+  --accent-cyan: #06b6d4;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --border-glow: rgba(139, 92, 246, 0.25);
+  --gradient-main: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Custom Smooth Hover Scrollbar Setup */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.3s;
+}
+
+*:hover {
+  scrollbar-color: rgba(139, 92, 246, 0.5) transparent;
+}
+
+/* WebKit (Chrome, Edge, Safari) Scrollbar Design */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-purple);
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.gradient-text {
+  background: var(--gradient-main);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Topbar (Sticky / Floating on Scroll) */
+.topbar {
+  position: sticky;
+  top: 0;
+  height: 65px;
+  background: rgba(14, 18, 34, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+  z-index: 1000;
+}
+
+.logo { 
+  font-weight: 800; 
+  font-size: 1.25rem; 
+  letter-spacing: 0.5px; 
+}
+
+/* Centered Search Bar Layout */
+.search-wrapper { 
+  position: relative; 
+  width: 38%; 
+  max-width: 450px; 
+  margin: 0 auto;
+}
+
+.search-svg { 
+  position: absolute; 
+  left: 14px; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  color: var(--text-secondary); 
+  pointer-events: none; 
+}
+
+#searchInput {
+  width: 100%;
+  padding: 9px 36px 9px 42px;
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(5, 7, 15, 0.7);
+  color: #fff;
+  outline: none;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+#searchInput:focus {
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 12px var(--border-glow);
+}
+
+/* Clear Search Button Styles */
+.clear-search-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 4px;
+  transition: color 0.2s;
+}
+
+.clear-search-btn:hover {
+  color: var(--text-primary);
+}
+
+/* Layout Structure */
+.app-layout { 
+  display: flex; 
+  flex: 1; 
+  overflow: hidden; 
+  height: calc(100vh - 65px); 
+}
+
+/* Left Sidebar */
+.left-sidebar {
+  width: 130px;
+  background: rgba(14, 18, 34, 0.4);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 10px;
+  gap: 8px;
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+.cat-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  padding: 9px 6px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.cat-btn:hover, .cat-btn.active {
+  background: var(--gradient-main);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+/* Main Workspace */
+.main-content {
+  flex: 1;
+  padding: 20px 24px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.player-section { 
+  max-width: 950px; 
+  margin: 0 auto 24px auto; 
+}
+
+.player-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.iframe-holder, .iframe-holder iframe { 
+  width: 100%; 
+  height: 100%; 
+  border: none; 
+}
+
+.loader-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-dark);
+}
+
+.loader-backdrop {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(40px) brightness(0.15);
+}
+
+.loader-content { 
+  position: relative; 
+  z-index: 2; 
+  text-align: center; 
+  width: 260px; 
+}
+
+.thumb-glow-wrapper { 
+  width: 110px; 
+  height: 75px; 
+  margin: 0 auto 14px auto; 
+  border-radius: 8px; 
+  overflow: hidden; 
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5); 
+}
+
+.loader-thumb { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+}
+
+.progress-track {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  margin-top: 14px;
+  overflow: hidden;
+}
+
+.progress-fill { 
+  width: 0%; 
+  height: 100%; 
+  background: var(--gradient-main); 
+  transition: width 0.1s ease-out; 
+}
+
+.game-action-bar {
+  background: var(--bg-card);
+  padding: 12px 18px;
+  border-radius: 10px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.game-action-bar h3 { 
+  font-size: 0.95rem; 
+  font-weight: 700; 
+}
+
+.action-buttons { 
+  display: flex; 
+  gap: 8px; 
+}
+
+.action-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  padding: 6px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.8rem;
+  transition: background 0.2s ease;
+}
+
+.action-btn:hover { 
+  background: rgba(255, 255, 255, 0.12); 
+}
+
+.exit-btn { 
+  background: rgba(239, 68, 68, 0.15); 
+  color: #f87171; 
+  border-color: rgba(239, 68, 68, 0.3); 
+}
+
+.exit-btn:hover { 
+  background: #ef4444; 
+  color: #fff; 
+}
+
+.section-header { 
+  margin-bottom: 16px; 
+}
+
+.section-header h2 { 
+  font-size: 1.15rem; 
+  font-weight: 700; 
+}
+
+.glow-line { 
+  width: 40px; 
+  height: 3px; 
+  background: var(--gradient-main); 
+  border-radius: 2px; 
+  margin-top: 4px; 
+}
+
+/* Grid Cards */
+.game-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); 
+  gap: 16px; 
+}
+
+.game-card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  transition: all 0.2s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-purple);
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.15);
+}
+
+.card-img-wrapper { 
+  width: 100%; 
+  height: 110px; 
+}
+
+.game-card img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+}
+
+.card-info { 
+  padding: 10px 12px; 
+}
+
+.game-card h4 { 
+  font-size: 0.82rem; 
+  font-weight: 700; 
+  margin-bottom: 3px; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
+
+.card-tag { 
+  font-size: 0.7rem; 
+  color: var(--accent-cyan); 
+  font-weight: 600; 
+}
+
+/* Right Sidebar (Up Next) */
+.right-sidebar {
+  width: 250px;
+  background: rgba(14, 18, 34, 0.3);
+  padding: 16px 12px;
+  border-left: 1px solid rgba(255, 255, 255, 0.04);
+  flex-shrink: 0;
+  overflow-y: scroll !important;
+}
+
+.panel-title { 
+  font-size: 0.75rem; 
+  font-weight: 700; 
+  color: var(--text-secondary); 
+  margin-bottom: 12px; 
+  text-transform: uppercase; 
+  letter-spacing: 0.5px; 
+}
+
+.recommendations-list { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 10px; 
+}
+
+.mini-card {
+  display: flex;
+  gap: 10px;
+  background: var(--bg-card);
+  padding: 7px;
+  border-radius: 9px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  transition: border-color 0.2s ease;
+}
+
+.mini-card:hover { 
+  border-color: var(--accent-purple); 
+}
+
+.mini-card img { 
+  width: 65px; 
+  height: 45px; 
+  border-radius: 6px; 
+  object-fit: cover; 
+}
+
+.mini-card h4 { 
+  font-size: 0.78rem; 
+  font-weight: 600; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  width: 130px; 
+}
+
+.hidden { 
+  display: none !important; 
+}
