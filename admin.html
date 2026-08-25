@@ -276,7 +276,7 @@
       margin-bottom: 8px; 
     }
 
-    .form-group input, .form-group select { 
+    .form-group input, .form-group select, .form-group textarea { 
       width: 100%; 
       padding: 13px 16px; 
       border-radius: 10px; 
@@ -288,7 +288,7 @@
       transition: all 0.3s; 
     }
 
-    .form-group input:focus, .form-group select:focus { 
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { 
       border-color: var(--accent-purple); 
       box-shadow: 0 0 15px var(--studio-glow); 
       background: rgba(5, 7, 15, 0.95);
@@ -418,9 +418,18 @@
                 <label for="formCategory">Category</label>
                 <input type="text" id="formCategory" placeholder="e.g. Action, Racing, Puzzle" required>
               </div>
+
+              <!-- HTML File Upload & Code Section -->
               <div class="form-group full">
-                <label for="formGamePath">Local Game Path / HTML File Path</label>
-                <input type="text" id="formGamePath" placeholder="games/cyber-runner/index.html" required>
+                <label>Upload Game HTML File or Paste Code</label>
+                <div class="upload-box" onclick="document.getElementById('formHtmlFile').click()">
+                  <div>
+                    <p id="htmlUploadText" style="font-size: 0.9rem; font-weight: 700; color: var(--text-primary);">Click to upload single .html game file</p>
+                    <span style="font-size: 0.78rem; color: var(--text-secondary);">Or paste your raw HTML code below</span>
+                  </div>
+                  <input type="file" id="formHtmlFile" accept=".html" onchange="handleHtmlFileUpload(event)">
+                </div>
+                <textarea id="formHtmlCode" rows="6" placeholder="<!DOCTYPE html> ... Game Code Here ..." style="margin-top: 12px; font-family: monospace; font-size: 0.85rem;" required></textarea>
               </div>
 
               <div class="form-group full">
@@ -529,6 +538,7 @@
       document.getElementById('gameStudioForm').reset();
       document.getElementById('thumbPreview').style.display = 'none';
       document.getElementById('uploadText').textContent = 'Click to upload icon image';
+      document.getElementById('htmlUploadText').textContent = 'Click to upload single .html game file';
       document.getElementById('deleteGameBtn').classList.add('hidden');
       switchView('editor');
     }
@@ -540,7 +550,7 @@
       document.getElementById('editGameIndex').value = index;
       document.getElementById('formTitle').value = game.title || '';
       document.getElementById('formCategory').value = game.category || '';
-      document.getElementById('formGamePath').value = game.gamePath || game.embedUrl || '';
+      document.getElementById('formHtmlCode').value = game.htmlCode || '';
       document.getElementById('formThumbUrl').value = game.thumbnail || '';
       
       if(game.thumbnail) {
@@ -550,8 +560,25 @@
         document.getElementById('uploadText').textContent = 'Thumbnail Loaded';
       }
 
+      if(game.htmlCode) {
+        document.getElementById('htmlUploadText').textContent = 'HTML Code Loaded';
+      }
+
       document.getElementById('deleteGameBtn').classList.remove('hidden');
       switchView('editor');
+    }
+
+    function handleHtmlFileUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const htmlContent = e.target.result;
+          document.getElementById('formHtmlCode').value = htmlContent;
+          document.getElementById('htmlUploadText').textContent = `Loaded: ${file.name}`;
+        };
+        reader.readAsText(file);
+      }
     }
 
     function handleImageUpload(event) {
@@ -576,13 +603,15 @@
       const index = parseInt(document.getElementById('editGameIndex').value);
       const title = document.getElementById('formTitle').value.trim();
       const category = document.getElementById('formCategory').value.trim();
-      const gamePath = document.getElementById('formGamePath').value.trim();
+      const htmlCode = document.getElementById('formHtmlCode').value.trim();
       const thumbnail = document.getElementById('formThumbUrl').value.trim();
 
+      const gameData = { title, category, htmlCode, thumbnail };
+
       if (index === -1) {
-        allStudioGames.push({ title, category, gamePath, thumbnail });
+        allStudioGames.push(gameData);
       } else {
-        allStudioGames[index] = { title, category, gamePath, thumbnail };
+        allStudioGames[index] = gameData;
       }
 
       localStorage.setItem('vektron_master_games', JSON.stringify(allStudioGames));
