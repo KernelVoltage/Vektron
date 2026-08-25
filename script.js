@@ -64,7 +64,7 @@ async function loadPortalData() {
   }
 }
 
-// 2. Dynamic Category Sidebar Generator (Smart Case Normalization to avoid duplicates like Action/action)
+// 2. Dynamic Category Sidebar Generator (Smart Case Normalization to avoid duplicates)
 function buildCategorySidebar() {
   if (!categorySidebar) return;
   categorySidebar.innerHTML = '';
@@ -183,10 +183,13 @@ function renderRecommendations() {
   recommendationsList.appendChild(fragment);
 }
 
-// 5. Game Launcher & Screen Transition
+// 5. Game Launcher & Screen Transition (Supports local gamePath / HTML files)
 function launchGame(game) {
-  if (!game.embedUrl) {
-    alert("This game does not have a valid embed URL!");
+  // Check for either gamePath (local file/folder) or fallback to embedUrl if any external exists
+  const targetSource = game.gamePath || game.embedUrl;
+
+  if (!targetSource) {
+    alert("This game does not have a valid local path or embed URL!");
     return;
   }
 
@@ -214,7 +217,7 @@ function launchGame(game) {
       clearInterval(timer);
       setTimeout(() => {
         if (gameLoader) gameLoader.classList.add('hidden');
-        if (gameFrame) gameFrame.src = game.embedUrl;
+        if (gameFrame) gameFrame.src = targetSource;
       }, 100);
     }
   }, 35);
