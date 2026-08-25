@@ -276,7 +276,7 @@
       margin-bottom: 8px; 
     }
 
-    .form-group input, .form-group select, .form-group textarea { 
+    .form-group input, .form-group select { 
       width: 100%; 
       padding: 13px 16px; 
       border-radius: 10px; 
@@ -288,7 +288,7 @@
       transition: all 0.3s; 
     }
 
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { 
+    .form-group input:focus, .form-group select:focus { 
       border-color: var(--accent-purple); 
       box-shadow: 0 0 15px var(--studio-glow); 
       background: rgba(5, 7, 15, 0.95);
@@ -408,6 +408,7 @@
           <h2 id="editorHeading" class="editor-title gradient-text">Publish New Game</h2>
           <form id="gameStudioForm">
             <input type="hidden" id="editGameIndex" value="-1">
+            <input type="hidden" id="formHtmlCode"> <!-- Hidden input to securely store code -->
             
             <div class="form-grid">
               <div class="form-group">
@@ -419,17 +420,17 @@
                 <input type="text" id="formCategory" placeholder="e.g. Action, Racing, Puzzle" required>
               </div>
 
-              <!-- HTML File Upload & Code Section -->
+              <!-- Single Clean HTML File Upload Box -->
               <div class="form-group full">
-                <label>Upload Game HTML File or Paste Code</label>
+                <label>Upload Game HTML File</label>
                 <div class="upload-box" onclick="document.getElementById('formHtmlFile').click()">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent-purple)" stroke-width="2" style="flex-shrink:0;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                   <div>
-                    <p id="htmlUploadText" style="font-size: 0.9rem; font-weight: 700; color: var(--text-primary);">Click to upload single .html game file</p>
-                    <span style="font-size: 0.78rem; color: var(--text-secondary);">Or paste your raw HTML code below</span>
+                    <p id="htmlUploadText" style="font-size: 0.9rem; font-weight: 700; color: var(--text-primary);">Click to upload your game .html file</p>
+                    <span style="font-size: 0.78rem; color: var(--text-secondary);">Select the single playable HTML file for your game</span>
                   </div>
                   <input type="file" id="formHtmlFile" accept=".html" onchange="handleHtmlFileUpload(event)">
                 </div>
-                <textarea id="formHtmlCode" rows="6" placeholder="<!DOCTYPE html> ... Game Code Here ..." style="margin-top: 12px; font-family: monospace; font-size: 0.85rem;" required></textarea>
               </div>
 
               <div class="form-group full">
@@ -536,9 +537,10 @@
       document.getElementById('editorHeading').textContent = 'Publish New Game';
       document.getElementById('editGameIndex').value = '-1';
       document.getElementById('gameStudioForm').reset();
+      document.getElementById('formHtmlCode').value = '';
       document.getElementById('thumbPreview').style.display = 'none';
       document.getElementById('uploadText').textContent = 'Click to upload icon image';
-      document.getElementById('htmlUploadText').textContent = 'Click to upload single .html game file';
+      document.getElementById('htmlUploadText').textContent = 'Click to upload your game .html file';
       document.getElementById('deleteGameBtn').classList.add('hidden');
       switchView('editor');
     }
@@ -561,7 +563,7 @@
       }
 
       if(game.htmlCode) {
-        document.getElementById('htmlUploadText').textContent = 'HTML Code Loaded';
+        document.getElementById('htmlUploadText').textContent = 'HTML File Loaded Successfully';
       }
 
       document.getElementById('deleteGameBtn').classList.remove('hidden');
@@ -606,11 +608,20 @@
       const htmlCode = document.getElementById('formHtmlCode').value.trim();
       const thumbnail = document.getElementById('formThumbUrl').value.trim();
 
+      if (!htmlCode && index === -1) {
+        alert('Please upload a valid .html game file before submitting!');
+        return;
+      }
+
       const gameData = { title, category, htmlCode, thumbnail };
 
       if (index === -1) {
         allStudioGames.push(gameData);
       } else {
+        // Agar edit karte waqt naya file upload nahi kiya toh purana code retain rahega
+        if(!htmlCode) {
+          gameData.htmlCode = allStudioGames[index].htmlCode;
+        }
         allStudioGames[index] = gameData;
       }
 
