@@ -419,8 +419,8 @@
                 <input type="text" id="formCategory" placeholder="e.g. Action, Racing, Puzzle" required>
               </div>
               <div class="form-group full">
-                <label for="formEmbedUrl">Embed Game URL (Iframe Game Link)</label>
-                <input type="url" id="formEmbedUrl" placeholder="https://html5.gamemonetize.com/..." required>
+                <label for="formGamePath">Local Game Path / HTML File Path</label>
+                <input type="text" id="formGamePath" placeholder="games/cyber-runner/index.html" required>
               </div>
 
               <div class="form-group full">
@@ -540,7 +540,7 @@
       document.getElementById('editGameIndex').value = index;
       document.getElementById('formTitle').value = game.title || '';
       document.getElementById('formCategory').value = game.category || '';
-      document.getElementById('formEmbedUrl').value = game.embedUrl || '';
+      document.getElementById('formGamePath').value = game.gamePath || game.embedUrl || '';
       document.getElementById('formThumbUrl').value = game.thumbnail || '';
       
       if(game.thumbnail) {
@@ -576,13 +576,13 @@
       const index = parseInt(document.getElementById('editGameIndex').value);
       const title = document.getElementById('formTitle').value.trim();
       const category = document.getElementById('formCategory').value.trim();
-      const embedUrl = document.getElementById('formEmbedUrl').value.trim();
+      const gamePath = document.getElementById('formGamePath').value.trim();
       const thumbnail = document.getElementById('formThumbUrl').value.trim();
 
       if (index === -1) {
-        allStudioGames.push({ title, category, embedUrl, thumbnail });
+        allStudioGames.push({ title, category, gamePath, thumbnail });
       } else {
-        allStudioGames[index] = { title, category, embedUrl, thumbnail };
+        allStudioGames[index] = { title, category, gamePath, thumbnail };
       }
 
       localStorage.setItem('vektron_master_games', JSON.stringify(allStudioGames));
